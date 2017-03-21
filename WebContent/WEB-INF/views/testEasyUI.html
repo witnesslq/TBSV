@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  
+  <title>测试easyui</title>
+  
+		<!--引入百度地图的jssdk，这里需要使用你在百度地图开发者平台申请的 ak-->
+		<script src="http://api.map.baidu.com/api?v=2.0&ak=2F2bx9T1jCv2xCUUnrG55UPYLwCTCN6G"></script>
+		<!-- 引入 ECharts -->
+		<script src="echarts.min.js"></script>
+		<!-- 引入百度地图扩展 -->
+		<script src="bmap.min.js"></script>	
+
+		 <!--jQuery 的主文件-->
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<!--easyUI 的主文件...-->
+		<script  src="easyui/jquery.easyui.min.js"></script>
+		<!--easyui 的主样式文件...-->
+		<link rel="stylesheet" href="easyui/themes/default/easyui.css">
+
+		<!--easyui 的主样式文件...-->
+		<link rel="stylesheet" href="easyui/themes/icon.css">
+
+
+ </head>
+<body>
+
+	<div id="layout" class="easyui-layout"  data-options="fit:true">   
+		<div data-options="region:'north',title:'大连市交通信息大数据可视化平台',split:true," style="height:100px;"></div> 
+  
+		 <!--菜单目录...-->
+		 <div data-options="region:'west',title:'菜单',split:true" style="width:200px;">
+
+			 <div id="menu" class="easyui-accordion" data-options="fit:true" style="width:300px;height:200px;"> 
+			 
+					<div title="&nbsp道路路况统计分析" style="overflow:auto;padding:10px;">
+
+					     <h3 style="color:#0099FF;">要素选择</h3>   
+						 <select id="ysxz" class="easyui-combobox"  style="width:150px;">   
+							  <option value="kkll">卡口流量</option>   
+							  <option value="sslk">实时路况</option>   
+						 </select>  
+						 <br/>
+
+						 <h3 style="color:#0099FF;">指数选择</h3>   
+						 <select id="zsxz" class="easyui-combobox"  style="width:150px;">   
+							  <option value="quanju">全局时空Moran's指数</option>   
+							  <option value="jubu">局部时空Moran's指数</option>   
+						 </select>  
+
+						  <br/>
+
+                         <a id="querybtn"  style="margin-top:20px;margin-left:20px;" href="#" class="easyui-linkbutton"
+						 data-options="iconCls:'icon-sum'">计算</a> 
+
+					</div> 
+					<!------------------------功能分割线-------------------------------------->
+					<div title="&nbspOD分析（东联路）" style="padding:10px;">   
+						content2    
+					</div>   
+					<!------------------------功能分割线-------------------------------------->
+					<div title="&nbsp卡口统计分析" style="padding:10px;">   
+						content3    
+					</div> 
+					<!------------------------功能分割线-------------------------------------->
+					<div title="&nbsp行车轨迹显示" style="padding:10px;">   
+						content4    
+					</div> 
+			</div>  
+		</div>   
+
+		<div id="echart" data-options="region:'center',title:'地图可视化'" style="padding:5px;background:#eee;"></div>   
+
+	</div>  
+
+
+	<script type="text/javascript">
+	 // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('echart'));
+		
+		option = {
+    // 加载 bmap 组件
+    bmap: {
+        // 百度地图中心经纬度
+        center: [121.616058, 38.940209],
+        // 百度地图缩放
+        zoom: 14,
+        // 是否开启拖拽缩放，可以只设置 'scale' 或者 'move'
+        roam: true,
+        // 百度地图的自定义样式，见 http://developer.baidu.com/map/jsdevelop-11.htm
+        mapStyle: {}
+    },
+    series: [{
+        type: 'scatter',
+        // 使用百度地图坐标系
+        coordinateSystem: 'bmap',
+        // 数据格式跟在 geo 坐标系上一样，每一项都是 [经度，纬度，数值大小，其它维度...]
+        data: [ [120, 30, 1] ]
+    }]
+}
+
+	myChart.setOption(option);
+	// 获取百度地图实例，使用百度地图自带的控件
+	var bmap = myChart.getModel().getComponent('bmap').getBMap();
+	bmap.addControl(new BMap.MapTypeControl());
+	
+	</script>
+  
+ </body>
+</html>
